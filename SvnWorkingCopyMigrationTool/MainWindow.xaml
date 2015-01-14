@@ -1,0 +1,56 @@
+﻿<Window x:Class="SvnWorkingCopyMigrationTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Working Copy: "/>
+                <TextBox Width="300" Text="{Binding Path=WorkingCopyRootPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Browse" Click="Button_Browse"/>
+            </StackPanel>
+            <Button Content="Test" Click="ButtonBase_OnClick"></Button>
+        </StackPanel>
+
+        <Label Grid.Row="1" Margin="0 20 0 0" Content="Working Copy" FontWeight="Bold" FontSize="18"/>
+
+        <Grid Grid.Row="2" Margin="20 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Content="Root Path:" HorizontalAlignment="Right"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="URL:" HorizontalAlignment="Right"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Repository Root:" HorizontalAlignment="Right"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Revision:" HorizontalAlignment="Right"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="Migration Required:" HorizontalAlignment="Right"/>
+
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedWorkingCopy.RootPath}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedWorkingCopy.URL}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedWorkingCopy.RepositoryRoot}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedWorkingCopy.Revision}"/>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedWorkingCopy.MigrationRequired}"/>
+            <Button Grid.Row="5" Grid.Column="1" Content="Migrate" HorizontalAlignment="Left" Click="Button_Click_Migrate"/>
+        </Grid>
+        
+        <Grid Grid.Row="3">
+            
+        </Grid>
+    </Grid>
+</Window>
