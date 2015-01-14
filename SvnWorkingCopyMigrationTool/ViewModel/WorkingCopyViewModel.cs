@@ -73,7 +73,7 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             _workingCopy = workingCopy;
             Dispatcher.Invoke(() =>
             {
-                RootPath = workingCopy.RootPath;
+                RootPath = workingCopy.RootPath.Replace("/", "\\");
                 URL = workingCopy.URL;
                 RepositoryRoot = workingCopy.RepositoryRoot;
                 Revision = workingCopy.Revision;
