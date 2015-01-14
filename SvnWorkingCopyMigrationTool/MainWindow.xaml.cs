@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SvnWorkingCopyMigrationTool.ViewModel;
 
@@ -20,8 +17,8 @@ namespace SvnWorkingCopyMigrationTool
         public MainWindow()
         {
             _viewModel = new MainViewModel();
-            DataContext = _viewModel;
             InitializeComponent();
+            DataContext = _viewModel;
         }
 
         private void Button_Browse(object sender, RoutedEventArgs e)
@@ -48,18 +45,20 @@ namespace SvnWorkingCopyMigrationTool
             }
         }
 
-        private void Button_Click_Migrate(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SelectedWorkingCopy.Migrate();
-        }
-
         private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            IEnumerable<WorkingCopyViewModel> wcvm = await _viewModel.Test();
+            Cursor = Cursors.Wait;
+            _viewModel.WorkingCopies.CollectionChanged += (o, args) =>
+            {
+                //MessageBox.Show(o.ToString(), args.Action.ToString());
+            };
+            await _viewModel.BrowseAutomatically();
+            Cursor = Cursors.Arrow;
+        }
 
-            StringBuilder sb = new StringBuilder();
-            wcvm.ToList().ForEach(w => sb.AppendLine(w.RootPath));
-            MessageBox.Show(sb.ToString(), "Working Copies");
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _viewModel.Action();
         }
     }
 }

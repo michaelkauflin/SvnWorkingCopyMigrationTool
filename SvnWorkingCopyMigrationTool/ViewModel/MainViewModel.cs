@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using SvnWorkingCopyMigrationTool.Model;
@@ -8,19 +8,16 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        private WorkingCopyViewModel _selectedWorkingCopy;
         private readonly WorkingCopyFinder _finder = new WorkingCopyFinder();
         private string _workingCopyRootPath;
 
-        public WorkingCopyViewModel SelectedWorkingCopy
+        public ObservableCollection<WorkingCopyViewModel> WorkingCopies { get; private set; }
+
+        public WorkingCopyViewModel SelectedWorkingCopyViewModel { get; set; }
+
+        public MainViewModel()
         {
-            get { return _selectedWorkingCopy; }
-            private set
-            {
-                if (Equals(value, _selectedWorkingCopy)) return;
-                _selectedWorkingCopy = value;
-                OnPropertyChanged();
-            }
+            WorkingCopies = new ObservableCollection<WorkingCopyViewModel>(); 
         }
 
         public string WorkingCopyRootPath
@@ -31,32 +28,25 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
                 if (value == _workingCopyRootPath) return;
                 _workingCopyRootPath = value;
                 OnPropertyChanged();
-                LoadWorkingCopy();
             }
         }
 
-        private void LoadWorkingCopy()
-        {
-            Task.Run(() =>
-            {
-                if (Directory.Exists(WorkingCopyRootPath))
-                {
-                    SetWorkingCopy(WorkingCopyRootPath);
-                }
-            });
-        }
-
-        public void SetWorkingCopy(string rootFolderPath)
-        {
-            var newWorkingCopy = new WorkingCopyViewModel(WorkingCopy.Parse(rootFolderPath));
-            Dispatcher.Invoke(() => SelectedWorkingCopy = newWorkingCopy);
-        }
-
-        public async Task<IEnumerable<WorkingCopyViewModel>>  Test()
+        public async Task BrowseAutomatically()
         {
             IEnumerable<WorkingCopy> workingCopies = await _finder.FindAll();
 
-            return workingCopies.Select(wc => new WorkingCopyViewModel(wc));
+            foreach (WorkingCopy workingCopy in workingCopies)
+            {
+                if (WorkingCopies.All(viewModel => viewModel.RootPath != workingCopy.RootPath))
+                {
+                    WorkingCopies.Add(new WorkingCopyViewModel(workingCopy));
+                }
+            }
+        }
+
+        public void Action()
+        {
+            SelectedWorkingCopyViewModel.Action();
         }
     }
 }

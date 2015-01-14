@@ -88,5 +88,10 @@ namespace SvnWorkingCopyMigrationTool.Model
                 URL = "Unknown"
             };
         }
+
+        public void OpenRootFolder()
+        {
+            Process.Start(RootPath);
+        }
     }
 }

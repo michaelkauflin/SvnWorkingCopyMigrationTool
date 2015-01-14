@@ -60,16 +60,12 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
         public WorkingCopyViewModel(WorkingCopy workingCopy)
         {
             _analyzer = new WorkingCopyMigrationAnalyzer();
-
             Load(workingCopy);
         }
 
-        public void Migrate()
+        public void Action()
         {
-            string migrationUrl = _analyzer.ComputeMigrationUrl(_workingCopy);
-            _workingCopy.Migrate(migrationUrl);
-
-            Load(WorkingCopy.Parse(_workingCopy.RootPath));
+            _workingCopy.OpenRootFolder();
         }
 
         private void Load(WorkingCopy workingCopy)
