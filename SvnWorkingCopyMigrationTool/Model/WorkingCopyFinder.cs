@@ -81,7 +81,10 @@ namespace SvnWorkingCopyMigrationTool.Model
 
             try
             {
-                return Directory.EnumerateDirectories(folderPath).Any(d => d.EndsWith("\\.svn"));
+                string svnDir = Directory.EnumerateDirectories(folderPath).First(d => d.EndsWith("\\.svn"));
+                return
+                    Directory.EnumerateFiles(svnDir)
+                        .Any(f => f.EndsWith("wc.db", StringComparison.InvariantCultureIgnoreCase));
             }
             catch
             {
