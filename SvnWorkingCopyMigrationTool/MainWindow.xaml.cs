@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SvnWorkingCopyMigrationTool.ViewModel;
@@ -52,7 +55,11 @@ namespace SvnWorkingCopyMigrationTool
 
         private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            await _viewModel.Test();
+            IEnumerable<WorkingCopyViewModel> wcvm = await _viewModel.Test();
+
+            StringBuilder sb = new StringBuilder();
+            wcvm.ToList().ForEach(w => sb.AppendLine(w.RootPath));
+            MessageBox.Show(sb.ToString(), "Working Copies");
         }
     }
 }

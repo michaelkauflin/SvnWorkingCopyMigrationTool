@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace SvnWorkingCopyMigrationTool.Model
 {
@@ -18,6 +17,9 @@ namespace SvnWorkingCopyMigrationTool.Model
                 var directories = new List<string>();
 
                 DriveInfo.GetDrives()
+                    .Where(d => d.IsReady)
+                    .Where(d => !d.Name.Equals("G:\\", StringComparison.InvariantCultureIgnoreCase))
+                    .Where(d => !d.Name.Equals("T:\\", StringComparison.InvariantCultureIgnoreCase))
                     .ToList()
                     .ForEach(
                         drive =>
@@ -33,6 +35,8 @@ namespace SvnWorkingCopyMigrationTool.Model
 
                 return directories;
             });
+
+            driveInfos = driveInfos.Where(d => !d.Equals(Environment.GetEnvironmentVariable("windir"))).ToList();
 
             await Task.Run(() =>
             {
@@ -59,13 +63,7 @@ namespace SvnWorkingCopyMigrationTool.Model
                 {
                     workingCopies.Add(WorkingCopy.Parse(rootDirectory));
                 }
-                foreach (string sub in subDirectories)
-                {
-                    if (IsSvnWorkingCopy(sub))
-                    {
-                        workingCopies.Add(WorkingCopy.Parse(sub));
-                    }
-                }
+                workingCopies.AddRange(from sub in subDirectories where IsSvnWorkingCopy(sub) select WorkingCopy.Parse(sub));
             }
             catch (UnauthorizedAccessException)
             {

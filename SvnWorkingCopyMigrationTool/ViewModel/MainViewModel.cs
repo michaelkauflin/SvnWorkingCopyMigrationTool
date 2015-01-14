@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using SvnWorkingCopyMigrationTool.Model;
 
 namespace SvnWorkingCopyMigrationTool.ViewModel
@@ -12,6 +9,7 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
     class MainViewModel : BaseViewModel
     {
         private WorkingCopyViewModel _selectedWorkingCopy;
+        private readonly WorkingCopyFinder _finder = new WorkingCopyFinder();
         private string _workingCopyRootPath;
 
         public WorkingCopyViewModel SelectedWorkingCopy
@@ -54,11 +52,11 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             Dispatcher.Invoke(() => SelectedWorkingCopy = newWorkingCopy);
         }
 
-        public async Task Test()
+        public async Task<IEnumerable<WorkingCopyViewModel>>  Test()
         {
-            
-        }
+            IEnumerable<WorkingCopy> workingCopies = await _finder.FindAll();
 
-        
+            return workingCopies.Select(wc => new WorkingCopyViewModel(wc));
+        }
     }
 }
