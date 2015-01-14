@@ -41,7 +41,7 @@ namespace SvnWorkingCopyMigrationTool
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                _viewModel.WorkingCopyRootPath = dlg.FileName;
+                
             }
         }
 

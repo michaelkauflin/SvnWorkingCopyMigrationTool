@@ -9,11 +9,6 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Working Copy: "/>
-                <TextBox Width="300" Text="{Binding Path=WorkingCopyRootPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Browse" Click="Button_Browse"/>
-            </StackPanel>
             <Button Content="Browse automatically" Click="ButtonBase_OnClick" Width="150" HorizontalAlignment="Left"></Button>
         </StackPanel>
         
