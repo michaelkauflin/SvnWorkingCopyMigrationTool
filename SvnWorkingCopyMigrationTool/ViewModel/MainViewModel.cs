@@ -46,7 +46,10 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
 
         public void Action()
         {
-            SelectedWorkingCopyViewModel.Action();
+            if (SelectedWorkingCopyViewModel != null)
+            {
+                SelectedWorkingCopyViewModel.Action();
+            }
         }
     }
 }
