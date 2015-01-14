@@ -41,7 +41,7 @@ namespace SvnWorkingCopyMigrationTool
 
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                
+                _viewModel.BrowseRootFolder = dlg.FileName;
             }
         }
 

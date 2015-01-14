@@ -8,8 +8,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="0" Orientation="Vertical">
-            <Button Content="Browse automatically" Click="ButtonBase_OnClick" Width="150" HorizontalAlignment="Left"></Button>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Root Folder:"></Label>
+            <TextBox Text="{Binding BrowseRootFolder, Mode=TwoWay}" Width="150"></TextBox>
+            <Button Content="..." Width="30" Click="Button_Browse" Margin="0 0 10 0"></Button>
+            <Label Content="Depth:"></Label>
+            <ComboBox ItemsSource="{Binding AvailableBrowseDepths}" SelectedItem="{Binding SelectedBrowseDepth, Mode=TwoWay}" Margin="0 0 10 0">
+            </ComboBox>
+            <Button Content="Search for SVN working copies" Click="ButtonBase_OnClick" Width="auto" Margin="0 0 10 0"></Button>
         </StackPanel>
         
         <Grid Grid.Row="1">

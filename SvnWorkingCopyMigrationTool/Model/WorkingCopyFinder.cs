@@ -9,7 +9,7 @@ namespace SvnWorkingCopyMigrationTool.Model
 {
     class WorkingCopyFinder
     {
-        public async Task<IEnumerable<WorkingCopy>> FindAll()
+        public async Task<IEnumerable<WorkingCopy>> FindAll(int depth)
         {
             var workingCopies = new List<WorkingCopy>();
             List<string> driveInfos = await Task.Run(() =>
@@ -42,7 +42,7 @@ namespace SvnWorkingCopyMigrationTool.Model
             {
                 driveInfos.AsParallel().ToList().ForEach(di =>
                 {
-                    var wcs = FindInDirectory(di);
+                    var wcs = FindInDirectory(di, depth);
                     workingCopies.AddRange(wcs);
                 });
             });
@@ -53,20 +53,30 @@ namespace SvnWorkingCopyMigrationTool.Model
             return workingCopies;
         }
 
-        public IEnumerable<WorkingCopy> FindInDirectory(string rootDirectory)
+        public IEnumerable<WorkingCopy> FindInDirectory(string rootDirectory, int depth)
         {
             var workingCopies = new List<WorkingCopy>();
+
+            if (IsSvnWorkingCopy(rootDirectory))
+            {
+                workingCopies.Add(WorkingCopy.Parse(rootDirectory));
+            }
+
+            if (depth == 0)
+            {
+                return workingCopies;
+            }
+
             try
             {
-                IEnumerable<string> subDirectories = Directory.EnumerateDirectories(rootDirectory);
-                if (IsSvnWorkingCopy(rootDirectory))
+                foreach (string sub in Directory.EnumerateDirectories(rootDirectory))
                 {
-                    workingCopies.Add(WorkingCopy.Parse(rootDirectory));
+                    workingCopies.AddRange(FindInDirectory(sub, depth - 1));
                 }
-                workingCopies.AddRange(from sub in subDirectories where IsSvnWorkingCopy(sub) select WorkingCopy.Parse(sub));
             }
-            catch (UnauthorizedAccessException)
+            catch
             {
+                // ignored
             }
 
             return workingCopies;
