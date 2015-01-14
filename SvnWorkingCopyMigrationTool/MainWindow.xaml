@@ -16,7 +16,7 @@
                 <TextBox Width="300" Text="{Binding Path=WorkingCopyRootPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Content="Browse" Click="Button_Browse"/>
             </StackPanel>
-            <Button Content="Test" Click="ButtonBase_OnClick"></Button>
+            <Button Content="Browse automatically" Click="ButtonBase_OnClick" Width="150" HorizontalAlignment="Left"></Button>
         </StackPanel>
 
         <Label Grid.Row="1" Margin="0 20 0 0" Content="Working Copy" FontWeight="Bold" FontSize="18"/>
