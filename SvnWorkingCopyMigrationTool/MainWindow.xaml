@@ -22,6 +22,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
             <Label Grid.Row="0" Content="Working Copies"></Label>
@@ -32,6 +33,10 @@
                 MouseDoubleClick="Control_OnMouseDoubleClick"
                 CanUserSortColumns="True">
             </DataGrid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Content="Refresh" Width="auto" HorizontalAlignment="Left" Click="Button_Click"></Button>
+                <Button Content="Clear" Width="auto" HorizontalAlignment="Left" Click="ButtonBase_OnClick2"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

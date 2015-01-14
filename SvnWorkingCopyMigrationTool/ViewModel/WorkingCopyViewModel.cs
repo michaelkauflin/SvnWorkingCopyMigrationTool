@@ -68,6 +68,11 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             _workingCopy.OpenRootFolder();
         }
 
+        public void Refresh()
+        {
+            Load(WorkingCopy.Parse(_workingCopy.RootPath));
+        }
+
         private void Load(WorkingCopy workingCopy)
         {
             _workingCopy = workingCopy;

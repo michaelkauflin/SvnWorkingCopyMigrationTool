@@ -61,7 +61,7 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
 
             foreach (WorkingCopy workingCopy in workingCopies)
             {
-                if (WorkingCopies.All(viewModel => viewModel.RootPath != workingCopy.RootPath))
+                if (WorkingCopies.All(viewModel => viewModel.RootPath != workingCopy.RootPath.Replace("/", "\\")))
                 {
                     WorkingCopies.Add(new WorkingCopyViewModel(workingCopy));
                 }
@@ -74,6 +74,19 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             {
                 SelectedWorkingCopyViewModel.Action();
             }
+        }
+
+        public void Refresh()
+        {
+            foreach (WorkingCopyViewModel vm in WorkingCopies)
+            {
+                vm.Refresh();
+            }
+        }
+
+        public void Clear()
+        {
+            WorkingCopies.Clear();
         }
     }
 }
