@@ -28,7 +28,8 @@
                 Grid.Row="1" 
                 ItemsSource="{Binding WorkingCopies}" 
                 SelectionMode="Single" SelectedItem="{Binding SelectedWorkingCopyViewModel,Mode=TwoWay}" 
-                MouseDoubleClick="Control_OnMouseDoubleClick">
+                MouseDoubleClick="Control_OnMouseDoubleClick"
+                CanUserSortColumns="True">
             </DataGrid>
         </Grid>
     </Grid>
