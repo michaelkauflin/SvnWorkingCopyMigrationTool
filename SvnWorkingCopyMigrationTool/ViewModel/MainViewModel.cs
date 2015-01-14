@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using SvnWorkingCopyMigrationTool.Model;
 
 namespace SvnWorkingCopyMigrationTool.ViewModel
@@ -53,6 +55,11 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             if (String.IsNullOrWhiteSpace(BrowseRootFolder))
             {
                 workingCopies = await _finder.FindAll(SelectedBrowseDepth);
+            }
+            else if (!Directory.Exists(BrowseRootFolder))
+            {
+                MessageBox.Show(String.Format("Directory {0} does not exist", BrowseRootFolder), "Error");
+                return;
             }
             else
             {
