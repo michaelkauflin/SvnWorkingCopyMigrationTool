@@ -48,10 +48,6 @@ namespace SvnWorkingCopyMigrationTool
         private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Cursor = Cursors.Wait;
-            _viewModel.WorkingCopies.CollectionChanged += (o, args) =>
-            {
-                //MessageBox.Show(o.ToString(), args.Action.ToString());
-            };
             await _viewModel.BrowseAutomatically();
             Cursor = Cursors.Arrow;
         }
