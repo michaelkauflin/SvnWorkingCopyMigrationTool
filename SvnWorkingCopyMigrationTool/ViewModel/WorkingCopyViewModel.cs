@@ -9,6 +9,7 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
         private string _url;
         private string _repositoryRoot;
         private readonly WorkingCopyMigrationAnalyzer _analyzer;
+        private string _migrationRequired;
 
         public string RootPath
         {
@@ -43,7 +44,16 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             }
         }
 
-        public string MigrationRequired { get; private set; }
+        public string MigrationRequired
+        {
+            get { return _migrationRequired; }
+            private set
+            {
+                if (value == _migrationRequired) return;
+                _migrationRequired = value;
+                OnPropertyChanged();
+            }
+        }
 
         public WorkingCopyViewModel(WorkingCopy workingCopy)
         {
