@@ -18,7 +18,10 @@
                 <TextBlock>
                     You can either let the tool search in all your drives by letting Root Folder empty, or search in 1 folder by specifying its path.
                     <LineBreak/>
+                    If you need to search into more than 1 folder, you can do the search in two times the list will be updated and not erased.
+                    <LineBreak/>
                     The deepness level represents the number of subdirectories the tool will search into.
+                    <LineBreak/>
                     <LineBreak/>
                     Example with root folder C:\
                     <LineBreak/>
