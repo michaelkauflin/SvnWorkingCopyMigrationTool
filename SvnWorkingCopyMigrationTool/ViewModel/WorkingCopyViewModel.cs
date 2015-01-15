@@ -8,7 +8,6 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
         private string _rootPath;
         private string _url;
         private string _repositoryRoot;
-        private string _revision;
         private readonly WorkingCopyMigrationAnalyzer _analyzer;
 
         public string RootPath
@@ -44,17 +43,6 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             }
         }
 
-        public string Revision
-        {
-            get { return _revision; }
-            private set
-            {
-                if (value == _revision) return;
-                _revision = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string MigrationRequired { get; private set; }
 
         public WorkingCopyViewModel(WorkingCopy workingCopy)
@@ -81,7 +69,6 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
                 RootPath = workingCopy.RootPath.Replace("/", "\\");
                 URL = workingCopy.URL;
                 RepositoryRoot = workingCopy.RepositoryRoot;
-                Revision = workingCopy.Revision;
                 MigrationRequired = _analyzer.RequiresMigration(workingCopy).ToString();
             });   
         }
