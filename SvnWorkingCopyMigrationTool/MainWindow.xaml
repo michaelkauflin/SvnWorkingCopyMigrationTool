@@ -37,8 +37,25 @@
                 MouseDoubleClick="Control_OnMouseDoubleClick"
                 CanUserSortColumns="True">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Migration Required" Binding="{Binding MigrationRequired}" Width="120" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Root Folder" Binding="{Binding RootPath}" Width="200" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Migration Required" Binding="{Binding MigrationRequired}" Width="120" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="Yes">
+                                        <Setter Property="Background" Value="Orange"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="No">
+                                        <Setter Property="Background" Value="ForestGreen"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                                <Setter Property="TextAlignment" Value="Center"></Setter>
+                                <Setter Property="FontWeight" Value="Bold"></Setter>
+                                <Setter Property="Foreground" Value="White"></Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Root Folder" Binding="{Binding RootPath}" Width="200" IsReadOnly="True">
+                    </DataGridTextColumn>
                     <DataGridHyperlinkColumn Header="Server URL" Binding="{Binding URL}" Width="400" IsReadOnly="True"/>
                     <DataGridHyperlinkColumn Header="Repository Root URL" Binding="{Binding RepositoryRoot}" Width="400" IsReadOnly="True"/>
                     

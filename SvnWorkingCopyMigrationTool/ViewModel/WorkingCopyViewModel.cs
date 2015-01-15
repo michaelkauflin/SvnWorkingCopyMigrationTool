@@ -69,7 +69,7 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
                 RootPath = workingCopy.RootPath.Replace("/", "\\");
                 URL = workingCopy.URL;
                 RepositoryRoot = workingCopy.RepositoryRoot;
-                MigrationRequired = _analyzer.RequiresMigration(workingCopy).ToString();
+                MigrationRequired = _analyzer.RequiresMigration(workingCopy)? "Yes" : "No";
             });   
         }
     }
