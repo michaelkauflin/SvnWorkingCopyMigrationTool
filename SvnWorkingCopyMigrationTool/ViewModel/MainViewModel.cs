@@ -51,6 +51,8 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
 
         public async Task BrowseAutomatically()
         {
+            bool foundNewWorkingCopies = false;
+
             IEnumerable<WorkingCopy> workingCopies;
             if (String.IsNullOrWhiteSpace(BrowseRootFolder))
             {
@@ -70,8 +72,14 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             {
                 if (WorkingCopies.All(viewModel => viewModel.RootPath != workingCopy.RootPath.Replace("/", "\\")))
                 {
+                    foundNewWorkingCopies = true;
                     WorkingCopies.Add(new WorkingCopyViewModel(workingCopy));
                 }
+            }
+
+            if (!foundNewWorkingCopies)
+            {
+                MessageBox.Show("Now new working copy found");
             }
         }
 
