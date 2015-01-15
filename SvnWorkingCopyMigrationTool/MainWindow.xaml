@@ -2,26 +2,43 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SVN Working Copy Migration Tool" Height="500" Width="1200">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Search" FontWeight="ExtraBold" FontSize="16"></Label>
         
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel.ToolTip>
+                <TextBlock>
+                    You can either let the tool search in all your drives by letting Root Folder empty, or search in 1 folder by specifying its path.
+                    <LineBreak/>
+                    The deepness level represents the number of subdirectories the tool will search into.
+                    <LineBreak/>
+                    Example with root folder C:\
+                    <LineBreak/>
+                    Deepness 1: search into C:\SVN but not in C:\SVN\Chinook
+                    <LineBreak/>
+                    Deepness 2: search in C:\, C:\SVN and C:\SVN\Chinook, but not in C:\SVN\Chinook\Dependencies
+                </TextBlock>
+            </StackPanel.ToolTip>
             <Label Content="Root Folder:"></Label>
             <TextBox Text="{Binding BrowseRootFolder, Mode=TwoWay}" Width="150"></TextBox>
             <Button Content="..." Width="30" Click="Button_Browse" Margin="0 0 10 0"></Button>
-            <Label Content="Depth:"></Label>
+            <Label Content="Deepness:"></Label>
             <ComboBox ItemsSource="{Binding AvailableBrowseDepths}" SelectedItem="{Binding SelectedBrowseDepth, Mode=TwoWay}" Margin="0 0 10 0">
             </ComboBox>
             <Button Content="Search for SVN working copies" Click="ButtonBase_OnClick" Width="auto" Margin="0 0 10 0"></Button>
         </StackPanel>
         
-        <Separator Grid.Row="1" Height="20"></Separator>
+        <Separator Grid.Row="2" Height="20"></Separator>
         
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
