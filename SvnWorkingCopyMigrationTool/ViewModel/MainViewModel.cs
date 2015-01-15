@@ -83,12 +83,15 @@ namespace SvnWorkingCopyMigrationTool.ViewModel
             }
         }
 
-        public void Refresh()
+        public async Task Refresh()
         {
-            foreach (WorkingCopyViewModel vm in WorkingCopies)
+            await Task.Run(() =>
             {
-                vm.Refresh();
-            }
+                foreach (WorkingCopyViewModel vm in WorkingCopies)
+                {
+                    vm.Refresh();
+                }
+            });
         }
 
         public void Clear()

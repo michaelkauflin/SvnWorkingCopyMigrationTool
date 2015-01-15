@@ -57,9 +57,11 @@ namespace SvnWorkingCopyMigrationTool
             _viewModel.Action();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Refresh();
+            Cursor = Cursors.Wait;
+            await _viewModel.Refresh();
+            Cursor = Cursors.Arrow;
         }
 
         private void ButtonBase_OnClick2(object sender, RoutedEventArgs e)
