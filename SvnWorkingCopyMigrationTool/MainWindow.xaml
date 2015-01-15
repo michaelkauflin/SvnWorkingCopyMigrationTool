@@ -29,9 +29,16 @@
             <DataGrid 
                 Grid.Row="1" 
                 ItemsSource="{Binding WorkingCopies}" 
+                AutoGenerateColumns="False"
                 SelectionMode="Single" SelectedItem="{Binding SelectedWorkingCopyViewModel,Mode=TwoWay}" 
                 MouseDoubleClick="Control_OnMouseDoubleClick"
                 CanUserSortColumns="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Root Folder" Binding="{Binding RootPath}" Width="200" IsReadOnly="True"/>
+                    <DataGridHyperlinkColumn Header="Server URL" Binding="{Binding URL}" Width="400" IsReadOnly="True"/>
+                    <DataGridHyperlinkColumn Header="Repository Root URL" Binding="{Binding RepositoryRoot}" Width="400" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Migration Required" Binding="{Binding MigrationRequired}" Width="120" IsReadOnly="True"/>
+                </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Content="Refresh" Width="auto" HorizontalAlignment="Left" Click="Button_Click"></Button>
