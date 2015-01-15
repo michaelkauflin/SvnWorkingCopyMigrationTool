@@ -18,8 +18,8 @@ namespace SvnWorkingCopyMigrationTool.Model
 
                 DriveInfo.GetDrives()
                     .Where(d => d.IsReady)
-                    .Where(d => !d.Name.Equals("G:\\", StringComparison.InvariantCultureIgnoreCase))
-                    .Where(d => !d.Name.Equals("T:\\", StringComparison.InvariantCultureIgnoreCase))
+                    .Where(d => !d.Name.Equals("G:\\", StringComparison.InvariantCultureIgnoreCase)) // Global Phonak shared directory, cannot contain working copies
+                    .Where(d => !d.Name.Equals("T:\\", StringComparison.InvariantCultureIgnoreCase)) // Transfer shared directory, too huge. User will have to specify his transfer folder
                     .ToList()
                     .ForEach(
                         drive =>
@@ -36,13 +36,17 @@ namespace SvnWorkingCopyMigrationTool.Model
                 return directories;
             });
 
-            driveInfos = driveInfos.Where(d => !d.Equals(Environment.GetEnvironmentVariable("windir"))).ToList();
+            // Exclude Windows folders
+            driveInfos = driveInfos
+                .Where(d => !d.Equals(Environment.GetEnvironmentVariable("windir")))
+                .Where(d => !d.Equals(Environment.GetEnvironmentVariable("temp")))
+                .ToList();
 
             await Task.Run(() =>
             {
                 driveInfos.AsParallel().ToList().ForEach(di =>
                 {
-                    var wcs = FindInDirectory(di, depth);
+                    var wcs = FindInDirectory(di, depth - 1);
                     workingCopies.AddRange(wcs);
                 });
             });
@@ -69,10 +73,7 @@ namespace SvnWorkingCopyMigrationTool.Model
 
             try
             {
-                foreach (string sub in Directory.EnumerateDirectories(rootDirectory))
-                {
-                    workingCopies.AddRange(FindInDirectory(sub, depth - 1));
-                }
+                Directory.EnumerateDirectories(rootDirectory).AsParallel().ToList().ForEach(d => workingCopies.AddRange(FindInDirectory(d, depth - 1)));
             }
             catch
             {
