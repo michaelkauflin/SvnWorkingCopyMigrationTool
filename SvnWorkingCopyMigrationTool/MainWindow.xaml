@@ -62,8 +62,8 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Content="Refresh" Width="auto" HorizontalAlignment="Left" Click="Button_Click"></Button>
-                <Button Content="Clear" Width="auto" HorizontalAlignment="Left" Click="ButtonBase_OnClick2"/>
+                <Button Content="Refresh Migration Statuses" Margin="0 0 5 0" Width="auto" HorizontalAlignment="Left" Click="Button_Click"></Button>
+                <Button Content="Clear Working copies" Width="auto" HorizontalAlignment="Left" Click="ButtonBase_OnClick2"/>
             </StackPanel>
         </Grid>
     </Grid>
