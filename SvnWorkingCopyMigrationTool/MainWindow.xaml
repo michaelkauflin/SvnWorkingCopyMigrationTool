@@ -5,6 +5,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -18,14 +19,16 @@
             <Button Content="Search for SVN working copies" Click="ButtonBase_OnClick" Width="auto" Margin="0 0 10 0"></Button>
         </StackPanel>
         
-        <Grid Grid.Row="1">
+        <Separator Grid.Row="1" Height="20"></Separator>
+        
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Label Grid.Row="0" Content="Working Copies"></Label>
+            <Label Grid.Row="0" Content="Working Copies" FontWeight="ExtraBold" FontSize="16"></Label>
             <DataGrid 
                 Grid.Row="1" 
                 ItemsSource="{Binding WorkingCopies}" 
@@ -34,10 +37,11 @@
                 MouseDoubleClick="Control_OnMouseDoubleClick"
                 CanUserSortColumns="True">
                 <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Header="Migration Required" Binding="{Binding MigrationRequired}" Width="120" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Root Folder" Binding="{Binding RootPath}" Width="200" IsReadOnly="True"/>
                     <DataGridHyperlinkColumn Header="Server URL" Binding="{Binding URL}" Width="400" IsReadOnly="True"/>
                     <DataGridHyperlinkColumn Header="Repository Root URL" Binding="{Binding RepositoryRoot}" Width="400" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Header="Migration Required" Binding="{Binding MigrationRequired}" Width="120" IsReadOnly="True"/>
+                    
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
